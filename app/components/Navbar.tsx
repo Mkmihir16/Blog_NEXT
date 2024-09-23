@@ -67,11 +67,11 @@ function Navbar({ className }: { className?: string }) {
 
             <div className="inline relative top-16 left-[40%] h-[5vh] text-2xl">
                 {isSignedIn ? (
-                    <div className="flex items-center gap-3">
+                    <div className="flex items-center gap-3 text-white">
                         <SignedOut>
                             <SignInButton />
                         </SignedOut>
-                        <SignedIn>
+                        <SignedIn >
                             <UserButton />
                             Hi, {user?.firstName}
                         </SignedIn>
