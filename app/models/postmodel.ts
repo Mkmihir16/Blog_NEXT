@@ -4,6 +4,10 @@ interface IPost extends Document {
     content: string;
   }
 const postsschema:Schema=new Schema({
+    userId:{
+      type:String,
+      required:true,
+    },
     title: {
         type: String,
         required: [true, 'Please provide a title'],
