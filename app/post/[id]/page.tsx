@@ -17,6 +17,7 @@ interface Post {
 export default  function    PostPage({ params }: { params: { id: string } }) {
     
     const [username,setusername]=useState("")
+    const [imgurl,setimgurl]=useState("")
     const { id } = params; // Accessing id from params
     // Use SWR to fetch the post data
     const { data: post, error } = useSWR<Post>(id ? `/api/post/${id}` : null, fetcher);
@@ -31,8 +32,13 @@ export default  function    PostPage({ params }: { params: { id: string } }) {
                   "Content-Type": "application/json",
                 },
               });
-    
+              const newres=await axios.get(`/api/getClerkuser/${post.userId}`,{
+                headers:{
+                  "Content-Type":"application/json"
+                }
+              })
               // Set the username from the fetched user data
+              setimgurl(newres.data.profileimg);
               setusername(response.data.name);
             } catch (err) {
               console.error("Error fetching user data:", err);
@@ -55,7 +61,7 @@ export default  function    PostPage({ params }: { params: { id: string } }) {
                          height="100"
                          width="100"
                          alt="Avatar"
-                         src={img}
+                         src="https://img.clerk.com/eyJ0eXBlIjoicHJveHkiLCJzcmMiOiJodHRwczovL2ltYWdlcy5jbGVyay5kZXYvb2F1dGhfZ29vZ2xlL2ltZ18ybUNEN3NHaEdnWURWUjhmQURSbmNiZnd4dHEifQ"
                          className="h-10 w-10 rounded-full border-2 object-cover"
                         />
                     </div>
