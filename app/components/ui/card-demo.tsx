@@ -50,6 +50,7 @@ export  function CardDemo() {
       >
         <div className="absolute w-full h-full top-0 left-0 transition duration-300 group-hover/card:bg-black opacity-60"></div>
         <div className="flex flex-row items-center space-x-4 z-10">
+        
           <Image
             height="100"
             width="100"
@@ -69,7 +70,7 @@ export  function CardDemo() {
             {post.title}
           </h1>
           <p className="font-normal text-sm text-gray-50 relative z-10 my-4">
-           {post.content}
+          {post.content.split(" ").slice(0, 15).join(" ")}...
           </p>
         </div>
       </div>
