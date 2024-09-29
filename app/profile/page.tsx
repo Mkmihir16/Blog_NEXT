@@ -12,6 +12,7 @@ import fetcher from "../utils/fetcher";
  import axios from "axios";
 import { div } from "framer-motion/m";
 import Navbar from "../components/Navbar";
+import { red } from "tailwindcss/colors";
 export default   function Profile(){
     const [userid, setuserid] = useState<string | undefined>();
     const [post,setpost]=useState([]);
@@ -33,6 +34,28 @@ export default   function Profile(){
         callfun();
       }, [user]);
     console.log(post)
+    const [showConfirm, setShowConfirm] = useState(false);
+    const [postIdToDelete, setPostIdToDelete] = useState(null);
+
+    const handleDeleteClick = (id) => {
+        setShowConfirm(true);  
+        setPostIdToDelete(id); 
+    };
+
+    const handleConfirmDelete = async () => {
+        try {
+            await axios.delete(`/api/deletePost/${postIdToDelete}`); // Adjust API endpoint as needed
+            console.log("Post deleted successfully");
+            // Optionally, refresh the list of posts or update the UI
+        } catch (error) {
+            console.error("Error deleting post:", error);
+        } finally {
+            setShowConfirm(false); // Close the dialog
+        }
+    };
+    const handleCancelDelete = () => {
+        setShowConfirm(false); // Close the dialog without deleting
+    };
     return(
         <div>
             <Navbar/>
@@ -75,7 +98,7 @@ export default   function Profile(){
               </Link>
             </div>
             <div className="flex gap-5">
-                <Link href={`/post/delete/${post._id}`} key={key}>
+                <Link href={`/editPost/${post._id}`} key={key}>
                 <Image
                 height={27}
                 width={27}
@@ -83,14 +106,14 @@ export default   function Profile(){
                 src={edit}
                 />
                 </Link>
-                <Link href={`/post/edit/${post._id}`} key={key}> 
                 <Image
+                className="cursor-pointer"
                 height={30}
                 width={30}
+                onClick={() => handleDeleteClick(post._id)}
                 alt="edit image"
                 src={dlt}
                 />
-                </Link>
             </div>
            
           </div>
@@ -99,6 +122,16 @@ export default   function Profile(){
     ) : (
       <p>No posts available</p> // Fallback message if post is empty
     )}
+    {showConfirm && (
+                <div className="confirmation-popup">
+                    <p>Are you sure you want to delete this post?</p>
+                    <div className=" flex gap-7 text-2xl">
+
+                    <button onClick={handleConfirmDelete} className="text-red-500 ">Yes</button>
+                    <button onClick={handleCancelDelete}>No</button>
+                    </div>
+                </div>
+            )}
     </div>
     </div>
     )

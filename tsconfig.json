@@ -26,6 +26,6 @@
 
     }
   },
-  "include": ["next-env.d.ts", "**/*.ts", "**/*.tsx", ".next/types/**/*.ts", "app/components/ui/card-demo.tsx", "app/api/editPost/[id]/route.js"],
+  "include": ["next-env.d.ts", "**/*.ts", "**/*.tsx", ".next/types/**/*.ts", "app/components/ui/card-demo.tsx", "app/api/editPost/[id]/route.js", "app/api/deletePost/[id]/route.js"],
   "exclude": ["node_modules"]
 }
