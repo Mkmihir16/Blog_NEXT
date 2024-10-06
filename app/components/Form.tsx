@@ -5,25 +5,37 @@ import { Input } from "../components/ui/input";
 import { cn } from "../lib/utils";
 import { Textarea } from "./ui/textarea";
 import { useState } from "react";
-import axios from "axios";
+import axios, {AxiosResponse} from "axios";
 import { useUser } from "@clerk/nextjs";
-
+import { useRouter } from "next/navigation";
+import { toast, ToastContainer } from "react-toastify";
+import 'react-toastify/dist/ReactToastify.css'; 
 // import { error } from "console";
-export function Signupform() {
+export  function Signupform() {
+  const router=useRouter();
   const user=useUser();
   const userId=user.isSignedIn?user.user.id:'';
     const [title,settitle]=useState("");
     const [content,setcontent]=useState("");
-  const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
+  const handleSubmit = async(e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
 const data={
     userId,
     title,
     content
 }
-  axios.post("http://localhost:3000/api/posts",data).then((res)=>console.log(res)).catch((e)=>console.log("error while posting a post"+e))
-    console.log("Form submitted");
-    console.log(data);
+try {
+  // Ensure the return type of axios.post is explicitly set
+  const response: AxiosResponse<any> = await axios.post("http://localhost:3000/api/posts", data);
+
+  // Success message and redirect
+  toast.success("Blog created successfully!");
+  setTimeout(() => {
+    router.push("/");  // Redirect to home page after success
+  }, 2000);  // Delay for toast
+} catch (error) {
+  toast.error("Error creating blog");
+}
   };
   return (
     <div className="max-w-md w-full mx-auto rounded-none md:rounded-2xl p-4 md:p-8 shadow-input bg-white dark:bg-black">
@@ -57,6 +69,7 @@ const data={
 
     
       </form>
+      <ToastContainer position="top-right" autoClose={2000} /> 
     </div>
   );
 }

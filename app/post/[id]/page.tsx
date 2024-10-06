@@ -15,7 +15,6 @@ interface Post {
 
 // Accepts params directly as props
 export default  function    PostPage({ params }: { params: { id: string } }) {
-    
     const [username,setusername]=useState("")
     const [imgurl,setimgurl]=useState("")
     const { id } = params; // Accessing id from params

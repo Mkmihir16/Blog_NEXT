@@ -4,7 +4,6 @@ import Image from "next/image";
 import { useState,useEffect } from "react";
 import img from "../../public/assets/manu.webp"
 import axios from "axios";
-import { div } from "framer-motion/m";
 import Link from "next/link";
 export  function CardDemo() {
   const [posts, setPosts] = useState<any[]>([]); // Type the posts appropriately if you know the structure
@@ -20,7 +19,28 @@ export  function CardDemo() {
           },
         });
         const postData = res.data.data; // Assuming `data` contains the posts array
-        setPosts(postData);
+        const postsWithUserDetails = await Promise.all(
+          postData.map(async (post: any) => {
+            try {
+              const userRes = await axios.get(`/api/getusers/${post.userId}`);
+              const profileImgRes = await axios.get(`/api/getClerkuser/${post.userId}`);
+
+              return {
+                ...post,
+                userName: userRes.data.name,
+                profileImage: profileImgRes.data.profileimg || img, // Fallback to default image if not found
+              };
+            } catch (error) {
+              console.error("Error fetching user data:", error);
+              return {
+                ...post,
+                userName: "Unknown User",
+                profileImage: img, // Fallback to default image
+              };
+            }
+          })
+        )
+          setPosts(postsWithUserDetails);
         setLoading(false);
       } catch (err: unknown) {
         if (err instanceof Error) {
@@ -39,7 +59,9 @@ export  function CardDemo() {
   return (
     <div className="flex gap-3 flex-wrap justify-between mx-4">
 
-    {posts.map((post,key)=>(
+    {posts.map((post,key)=>
+    
+    (
       <Link href={`/post/${post._id}`}>
       <div className="max-w-xs w-[20vw] group/card">
       <div
@@ -55,12 +77,12 @@ export  function CardDemo() {
             height="100"
             width="100"
             alt="Avatar"
-            src={img}
+            src={post.profileImage || img} 
             className="h-10 w-10 rounded-full border-2 object-cover"
           />
           <div className="flex flex-col">
             <p className="font-normal text-base text-gray-50 relative z-10">
-              Manu Arora
+            {post.userName || "Anonymous"}
             </p>
             <p className="text-sm text-gray-400">2 min read</p>
           </div>

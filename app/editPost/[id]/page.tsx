@@ -1,7 +1,8 @@
 'use client'
 import { useRouter } from "next/navigation"
 import { useEffect,useState } from "react"
-
+import { toast, ToastContainer } from "react-toastify";
+import 'react-toastify/dist/ReactToastify.css'; 
 import axios from "axios"
 import { cn } from "@/app/lib/utils"
 import { Label } from "@/app/components/ui/label"
@@ -39,14 +40,22 @@ export default  function page({ params }: { params: { id: string } }) {
         const data={
             title,
             content
+          }
+          try{
+          const response=await axios.post(`/api/editPost/${id}`,data).then(()=>{
+
+            router.push("/profile")
+            toast.success("Blog updated successfully!");
+          })
+          console.log(response);
         }
-        const response=await axios.post(`/api/editPost/${id}`,data)
-        console.log(response);
+        catch(e){
+          toast.error("error")
+          // router.push()
+        }
         
         console.log("Form submitted");
-        if (response.status === 200) {
-            router.push(`/profile`);
-        }
+        
       }
     //   console.log(title+" "+content)
   return (
@@ -70,7 +79,7 @@ export default  function page({ params }: { params: { id: string } }) {
           </LabelInputContainer>
         </div>
         <button
-       onClick={()=>handleSubmit}
+       onClick={handleSubmit}
           className="bg-gradient-to-br relative group/btn from-black dark:from-zinc-900 dark:to-zinc-900 to-neutral-600 block dark:bg-zinc-800 w-full text-white rounded-md h-10 font-medium shadow-[0px_1px_0px_0px_#ffffff40_inset,0px_-1px_0px_0px_#ffffff40_inset] dark:shadow-[0px_1px_0px_0px_var(--zinc-800)_inset,0px_-1px_0px_0px_var(--zinc-800)_inset]"
           type="submit"
         >
@@ -82,6 +91,7 @@ export default  function page({ params }: { params: { id: string } }) {
 
     
       </form>
+      <ToastContainer position="top-right" autoClose={3000} /> 
     </div>
     </>
   )

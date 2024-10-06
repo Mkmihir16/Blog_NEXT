@@ -7,17 +7,22 @@ import { useEffect, useState } from "react";
 import Link from "next/link";
 import edit from "../public/assets/editicon.svg";
 import dlt from "../public/assets/icons8-delete.svg"
-import useSWR from 'swr';
-import fetcher from "../utils/fetcher";
- import axios from "axios";
-import { div } from "framer-motion/m";
+import axios from "axios";
+import { useRouter } from "next/navigation";
 import Navbar from "../components/Navbar";
-import { red } from "tailwindcss/colors";
 export default   function Profile(){
+  const router=useRouter();
     const [userid, setuserid] = useState<string | undefined>();
     const [post,setpost]=useState([]);
+    const [img,setimgurl]=useState();
     const {user}=useUser();
+    const userinfo=useUser();
     console.log(user?.id)
+    useEffect(()=>{
+      if(!userinfo.isSignedIn && userinfo.isLoaded){
+        router.push("/signin")
+      }
+    }, [userinfo.isSignedIn, userinfo.isLoaded, router])
     useEffect(() => {
         const callfun = async () => {
           if (user?.id) {
@@ -41,7 +46,27 @@ export default   function Profile(){
         setShowConfirm(true);  
         setPostIdToDelete(id); 
     };
-
+    useEffect(() => {
+      // If post is available, fetch the user data based on post.clerkId
+      const fetchUserData = async () => {
+        if (post) {
+          try {
+            
+            const newres=await axios.get(`/api/getClerkuser/${user.id}`,{
+              headers:{
+                "Content-Type":"application/json"
+              }
+            })
+            // Set the username from the fetched user data
+            setimgurl(newres.data.profileimg);
+           
+          } catch (err) {
+            console.error("Error fetching user data:", err);
+          }
+        }
+      };
+      fetchUserData();
+  })
     const handleConfirmDelete = async () => {
         try {
             await axios.delete(`/api/deletePost/${postIdToDelete}`); // Adjust API endpoint as needed
@@ -81,7 +106,7 @@ export default   function Profile(){
                 />
                 <div className="flex flex-col">
                   <p className="font-normal text-base text-gray-50 relative z-10">
-                    Manu Arora
+                    {user.firstName}
                   </p>
                   <p className="text-sm text-gray-400">2 min read</p>
                 </div>
