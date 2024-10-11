@@ -1,5 +1,6 @@
 "use client";
 import { cn } from "../../lib/utils";
+// import { Roboto } from '@next/font/google';
 import Image from "next/image";
 import { useState,useEffect } from "react";
 import img from "../../public/assets/manu.webp"
@@ -57,7 +58,7 @@ export  function CardDemo() {
   if (loading) return <p>Loading...</p>;
   if (error) return <p>Error: {error}</p>;
   return (
-    <div className="flex gap-3 flex-wrap justify-between mx-4">
+    <div className="flex gap-10 flex-wrap justify-center mx-4">
 
     {posts.map((post,key)=>
     

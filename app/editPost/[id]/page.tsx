@@ -42,7 +42,7 @@ export default  function page({ params }: { params: { id: string } }) {
             content
           }
           try{
-          const response=await axios.post(`/api/editPost/${id}`,data).then(()=>{
+          const response=await axios.post(`${window.location.origin}/api/editPost/${id}`,data).then(()=>{
 
             router.push("/profile")
             toast.success("Blog updated successfully!");

@@ -26,8 +26,8 @@ const data={
 }
 try {
   // Ensure the return type of axios.post is explicitly set
-  const response: AxiosResponse<any> = await axios.post("http://localhost:3000/api/posts", data);
-
+  // const response: AxiosResponse<any> = await axios.post("http://localhost:3000/api/posts", data);
+  const response: AxiosResponse<any> = await axios.post(`${window.location.origin}/api/posts`, data);
   // Success message and redirect
   toast.success("Blog created successfully!");
   setTimeout(() => {

@@ -34,7 +34,7 @@ function Navbar({ className }: { className?: string }) {
             const { id, fullName, primaryEmailAddress } = user;
       
             try {
-              await axios.post("/api/storeUser", {
+              await axios.post(`${window.location.origin}/api/storeUser`, {
                 clerkId: id,
                 name: fullName,
                 email: primaryEmailAddress?.emailAddress,

@@ -28,7 +28,7 @@ export default   function Profile(){
           if (user?.id) {
             setuserid(user.id);
             try {
-              const allposts = await axios.get(`/api/getProfile/${user.id}`); // Use user.id directly
+              const allposts = await axios.get(`${window.location.origin}/api/getProfile/${user.id}`); // Use user.id directly
               console.log(allposts.data);
               setpost(allposts.data);
             } catch (error) {
@@ -52,7 +52,7 @@ export default   function Profile(){
         if (post) {
           try {
             
-            const newres=await axios.get(`/api/getClerkuser/${user.id}`,{
+            const newres=await axios.get(`${window.location.origin}/api/getClerkuser/${user.id}`,{
               headers:{
                 "Content-Type":"application/json"
               }
@@ -69,7 +69,7 @@ export default   function Profile(){
   })
     const handleConfirmDelete = async () => {
         try {
-            await axios.delete(`/api/deletePost/${postIdToDelete}`); // Adjust API endpoint as needed
+            await axios.delete(`${window.location.origin}/api/deletePost/${postIdToDelete}`); // Adjust API endpoint as needed
             console.log("Post deleted successfully");
             // Optionally, refresh the list of posts or update the UI
         } catch (error) {

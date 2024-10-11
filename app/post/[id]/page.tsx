@@ -26,12 +26,12 @@ export default  function    PostPage({ params }: { params: { id: string } }) {
         const fetchUserData = async () => {
           if (post) {
             try {
-              const response = await axios.get(`/api/getusers/${post.userId}`, {
+              const response = await axios.get(`${window.location.origin}/api/getusers/${post.userId}`, {
                 headers: {
                   "Content-Type": "application/json",
                 },
               });
-              const newres=await axios.get(`/api/getClerkuser/${post.userId}`,{
+              const newres=await axios.get(`${window.location.origin}/api/getClerkuser/${post.userId}`,{
                 headers:{
                   "Content-Type":"application/json"
                 }
