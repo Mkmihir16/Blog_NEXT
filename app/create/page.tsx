@@ -4,6 +4,7 @@ import { Signupform } from '../components/Form'
 import { useUser } from '@clerk/nextjs'
 import { useRouter } from 'next/navigation'
 import Navbar from '../components/Navbar'
+import Loader from '../components/ui/Loader'
 const page = () => {
     const { isSignedIn, isLoaded } = useUser(); // Clerk user status
     const router = useRouter();
@@ -16,7 +17,7 @@ const page = () => {
   
     // Show loading state while Clerk is loading the authentication status
     if (!isLoaded) {
-      return <div>Loading...</div>;
+      return <Loader></Loader>;
     }
     if(isSignedIn){
 

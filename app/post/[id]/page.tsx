@@ -6,6 +6,7 @@ import img from "../../public/assets/manu.webp"
 import axios from 'axios';
 import { useState,useEffect } from 'react';
 import Post from '@/app/models/postmodel';
+import Loader from '@/app/components/ui/Loader';
 interface Post {
     id: string;
     title: string;
@@ -48,7 +49,7 @@ export default  function    PostPage({ params }: { params: { id: string } }) {
     })
 
     if (error) return <div>Failed to load</div>;
-    if (!post) return <div>Loading...</div>;
+    if (!post) return <Loader></Loader>;
 
     return (
         <div className='flex justify-center items-center h-screen'>

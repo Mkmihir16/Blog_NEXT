@@ -7,20 +7,23 @@ import Link from "next/link";
 import Button from '@mui/material/Button';
 import { useUser } from "@clerk/nextjs";
 import axios from "axios";
+
 import {
     SignInButton,
     SignedIn,
     SignedOut,
     UserButton
 } from '@clerk/nextjs';
+import Loader from "./ui/Loader";
 
 function Navbar({ className }: { className?: string }) {
     const { isLoaded, user, isSignedIn } = useUser();  // Destructure properly
 
     // Ensure user data is only accessed after loading
-    if (!isLoaded) {
-        return <div>Loading...</div>;
-    }
+    // if (!isLoaded) {
+    //     // return <div>Loading...</div>;
+    //     return <Loader></Loader>
+    // }
 
     // Check if user is signed in and log user details
     if (isSignedIn && user) {

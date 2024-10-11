@@ -6,6 +6,7 @@ import { useState,useEffect } from "react";
 import img from "../../public/assets/manu.webp"
 import axios from "axios";
 import Link from "next/link";
+import Loader from "./Loader";
 export  function CardDemo() {
   const [posts, setPosts] = useState<any[]>([]); // Type the posts appropriately if you know the structure
   const [loading, setLoading] = useState<boolean>(true);
@@ -55,7 +56,7 @@ export  function CardDemo() {
 
     loadPosts();
   }, []); 
-  if (loading) return <p>Loading...</p>;
+  if (loading) return <Loader></Loader>;
   if (error) return <p>Error: {error}</p>;
   return (
     <div className="flex gap-10 flex-wrap justify-center mx-4">
