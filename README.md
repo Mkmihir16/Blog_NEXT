@@ -1,36 +1,18 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# Blog Project
 
-## Getting Started
+## Overview
+This project is a blogging platform that allows users to create, read, update, and delete blogs. Users can sign up, log in, and interact with blogs from other users. Each authenticated user has access to their profile section where they can manage their own blogs.
 
-First, run the development server:
+## Key Features
+- **User Authentication**: Secure user authentication system using Clerk for sign-up, login, and logout functionality.
+- **View Blogs**: Users can browse blogs created by others.
+- **Create, Update, and Delete Blogs**: Authenticated users can create new blogs and manage their own blogs (update and delete) through the profile section.
+- **Profile Section**: Each user has a profile page to manage their own blogs.
 
-```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
-```
-
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
-
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
-
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
-
-## Learn More
-
-To learn more about Next.js, take a look at the following resources:
-
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
-
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
-
-## Deploy on Vercel
-
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
-
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+## Technologies Used
+- **Frontend**: Next.js
+- **Authentication**: Clerk for user authentication
+- **Database**: MongoDB (for storing user data and blog posts)
+- **Programming Language**: TypeScript
+- **Libraries**: 
+  - Mongoose (for database interactions)
