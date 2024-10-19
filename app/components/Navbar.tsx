@@ -1,4 +1,3 @@
-
 "use client";
 import React, { useState,useEffect } from "react";
 import { HoveredLink, Menu, MenuItem, ProductItem } from "./ui/navbar-menu";
@@ -18,12 +17,6 @@ import Loader from "./ui/Loader";
 
 function Navbar({ className }: { className?: string }) {
     const { isLoaded, user, isSignedIn } = useUser();  // Destructure properly
-
-    // Ensure user data is only accessed after loading
-    // if (!isLoaded) {
-    //     // return <div>Loading...</div>;
-    //     return <Loader></Loader>
-    // }
 
     // Check if user is signed in and log user details
     if (isSignedIn && user) {

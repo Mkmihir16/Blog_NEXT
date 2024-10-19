@@ -10,6 +10,9 @@ import dlt from "../public/assets/icons8-delete.svg"
 import axios from "axios";
 import { useRouter } from "next/navigation";
 import Navbar from "../components/Navbar";
+
+import { toast, ToastContainer } from "react-toastify";
+import 'react-toastify/dist/ReactToastify.css'; 
 export default   function Profile(){
   const router=useRouter();
     const [userid, setuserid] = useState<string | undefined>();
@@ -71,9 +74,17 @@ export default   function Profile(){
         try {
             await axios.delete(`${window.location.origin}/api/deletePost/${postIdToDelete}`); // Adjust API endpoint as needed
             console.log("Post deleted successfully");
+            toast.success("Blog deleted successfully!");
+            setTimeout(() => {
+              router.push("/profile");  // Redirect to home page after success
+            }, 2000);
             // Optionally, refresh the list of posts or update the UI
         } catch (error) {
             console.error("Error deleting post:", error);
+            toast.error("Error while deleting a blog..")
+            setTimeout(() => {
+              router.push("/profile");  // Redirect to home page after success
+            }, 2000);
         } finally {
             setShowConfirm(false); // Close the dialog
         }
